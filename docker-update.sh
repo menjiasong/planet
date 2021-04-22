@@ -1,2 +1,2 @@
-docker service update local_ogs
-docker service update local_app
+docker service update local_bas
+docker service update local_gateway

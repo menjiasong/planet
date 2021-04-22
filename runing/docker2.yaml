@@ -1,26 +1,24 @@
 version: "3.7"
 
 services:
-  app:
-    image: testapp:latest
-    container_name: app
-    hostname: app
+  gateway:
+    image: planetapp:latest
+    container_name: gateway
+    hostname: gateway
     volumes:
-      - "/c/www/test/planet/env:/env"
+      - "/c/www/planet/env:/env"
     ports:
-      - "10002:10002"
-      - "8082:8082"
-    command: ./app serve 8082 10002
-  api:
-    image: testapp:latest
-    container_name: api
-    hostname: api
+      - "8888:8888"
+    command: ./app gateway
+  bas:
+    image: planetapp:latest
+    container_name: bas
+    hostname: bas
     volumes:
-      - "/c/www/test/planet/env:/env"
+      - "/c/www/planet/env:/env"
     ports:
-      - "10001:10001"
-      - "8081:8081"
-    command: ./app serve 8081 10001
+      - "55550:55550"
+    command: ./app serve Bas
 networks:
   elastic-jaeger:
     driver: bridge

@@ -35,9 +35,9 @@ func ConfigServer(servFlag string)  []gcore.ServeSetting {
 			//网关
 			serveSettings =  []gcore.ServeSetting{
 				//测试demo
-				{":"+env.Config.GetString("Server.Bas.GrpcPort"),&service.TestServer{},pb.RegisterTestServer,pb.RegisterTestHandlerFromEndpoint},
-				{":"+env.Config.GetString("Server.Pro.GrpcPort"),&service.ProServer{},pb.RegisterProServer,pb.RegisterProHandlerFromEndpoint},
-				{":"+env.Config.GetString("Server.Usr.GrpcPort"),&service.UsrServer{},pb.RegisterUsrServer,pb.RegisterUsrHandlerFromEndpoint},
+				{"bas:"+env.Config.GetString("Server.Bas.GrpcPort"),&service.TestServer{},pb.RegisterTestServer,pb.RegisterTestHandlerFromEndpoint},
+				{"pro:"+env.Config.GetString("Server.Pro.GrpcPort"),&service.ProServer{},pb.RegisterProServer,pb.RegisterProHandlerFromEndpoint},
+				{"usr:"+env.Config.GetString("Server.Usr.GrpcPort"),&service.UsrServer{},pb.RegisterUsrServer,pb.RegisterUsrHandlerFromEndpoint},
 			}
 			break
 		default:

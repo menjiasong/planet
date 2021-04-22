@@ -28,7 +28,7 @@ services:
       placement:
         constraints: [node.role == manager]
   gateway:
-    image: planetapp:latest
+    image: planet_app2:latest
     container_name: gateway
     hostname: gateway
     volumes:
@@ -43,7 +43,7 @@ services:
     networks:
       - local_elastic-jaeger
   bas:
-    image: planetapp:latest
+    image: planet_app2:latest
     container_name: bas
     hostname: bas
     volumes:
@@ -58,7 +58,7 @@ services:
     networks:
       - local_elastic-jaeger
   pro:
-    image: planetapp:latest
+    image: planet_app2:latest
     container_name: pro
     hostname: pro
     volumes:
@@ -73,7 +73,7 @@ services:
     networks:
       - local_elastic-jaeger
   usr:
-    image: planetapp:latest
+    image: planet_app2:latest
     container_name: usr
     hostname: usr
     volumes:
@@ -88,7 +88,7 @@ services:
     networks:
       - local_elastic-jaeger
   ord:
-    image: planetapp:latest
+    image: planet_app2:latest
     container_name: ord
     hostname: ord
     volumes:
