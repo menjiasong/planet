@@ -1,0 +1,20 @@
+syntax = "proto3";
+package pb;
+
+//import "google/api/annotations.proto";
+option go_package = "./;pb";
+//import "validate/validate.proto";
+
+//基础
+service Bas{
+
+}
+
+message DlxConsumerRequest{
+    string header =1;
+    string body =2;
+}
+
+message BaseResponse{
+
+}

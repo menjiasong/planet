@@ -1,0 +1,63 @@
+version: "3.7"
+
+services:
+  jaegertracing:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaegertracing
+    hostname: jaegertracing
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+  swagger:
+    image: swaggerapi/swagger-ui
+    environment:
+      - SWAGGER_JSON=/foo/swagger.json
+    volumes:
+      - "/planet/src/doc:/foo"
+    ports:
+      - "801:8080"
+  portainer:
+    image: portainer/portainer:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - portainer_data:/data
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+  app:
+    image: testapp:latest
+    container_name: app
+    hostname: app
+    ports:
+      - "10000:10000"
+    command: ./app serve 10000
+    deploy:
+      mode: replicated
+      replicas: 2
+      labels: [server=app]
+    networks:
+      - local_elastic-jaeger
+  ogs:
+    image: testapp:latest
+    container_name: ogs
+    hostname: ogs
+    ports:
+      - "10001:10001"
+    command: ./app serve 10001
+    deploy:
+      mode: replicated
+      replicas: 2
+      labels: [server=ogs]
+    networks:
+      - local_elastic-jaeger
+volumes:
+  data:
+    driver: local
+  portainer_data:
+  jaeger_data:
+networks:
+  local_elastic-jaeger:
+    driver: overlay
