@@ -2,10 +2,10 @@
 CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 #打镜像
-docker build -f runing/app.df -t testapp:latest .
+docker build -f runing/app.df -t planetapp:latest .
 
 #把镜像打tag变成和仓库一致
-#docker tag  testapp:lastest 127.0.0.1:5000/myapp:lastest
+#docker tag  planetapp:lastest 127.0.0.1:5000/myapp:lastest
 
 
 #推到镜像上去

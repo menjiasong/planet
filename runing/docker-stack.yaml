@@ -15,7 +15,7 @@ services:
     volumes:
       - "/planet/src/doc:/foo"
     ports:
-      - "801:8080"
+      - "801:8081"
   portainer:
     image: portainer/portainer:latest
     ports:
@@ -27,30 +27,79 @@ services:
       replicas: 1
       placement:
         constraints: [node.role == manager]
-  app:
-    image: testapp:latest
-    container_name: app
-    hostname: app
+  gateway:
+    image: planetapp:latest
+    container_name: gateway
+    hostname: gateway
+    volumes:
+      - "/c/www/planet/env:/env"
     ports:
-      - "10000:10000"
-    command: ./app serve 10000
+      - "8080:8080"
+    command: ./app gateway
     deploy:
       mode: replicated
-      replicas: 2
-      labels: [server=app]
+      replicas: 1
+      labels: [server=gateway]
     networks:
       - local_elastic-jaeger
-  ogs:
-    image: testapp:latest
-    container_name: ogs
-    hostname: ogs
+  bas:
+    image: planetapp:latest
+    container_name: bas
+    hostname: bas
+    volumes:
+      - "/c/www/planet/env:/env"
     ports:
-      - "10001:10001"
-    command: ./app serve 10001
+      - "50050:50050"
+    command: ./app serve Bas
     deploy:
       mode: replicated
-      replicas: 2
-      labels: [server=ogs]
+      replicas: 1
+      labels: [server=bas]
+    networks:
+      - local_elastic-jaeger
+  pro:
+    image: planetapp:latest
+    container_name: pro
+    hostname: pro
+    volumes:
+      - "/c/www/planet/env:/env"
+    ports:
+      - "50051:50051"
+    command: ./app serve Pro
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [server=pro]
+    networks:
+      - local_elastic-jaeger
+  usr:
+    image: planetapp:latest
+    container_name: usr
+    hostname: usr
+    volumes:
+      - "/c/www/planet/env:/env"
+    ports:
+      - "50052:50052"
+    command: ./app serve Usr
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [server=usr]
+    networks:
+      - local_elastic-jaeger
+  ord:
+    image: planetapp:latest
+    container_name: ord
+    hostname: ord
+    volumes:
+      - "/c/www/planet/env:/env"
+    ports:
+      - "50053:50053"
+    command: ./app serve Ord
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [server=ord]
     networks:
       - local_elastic-jaeger
 volumes:
